@@ -2,14 +2,6 @@ package main
 
 import "fmt"
 
-func main() {
-	fmt.Println("Hello, World!")
-	fmt.Println("Hello, my name is James.")
-	fmt.Println(len("Hello World"))
-	fmt.Println("Hello World"[1])
-	fmt.Println("Hello " + "World")
-}
-
 // commented line
 /*
 	commented section
@@ -55,3 +47,82 @@ Booleans
 || - or
 ! - not
 */
+
+// new type
+type person struct {
+	// lowercase not visible outside the package
+	// uppercase visible outside the package
+	fname string
+	lname string
+}
+
+func (p person) speak() {
+	fmt.Println(p.fname, p.lname, "says Good morning.")
+}
+
+type angryPerson struct {
+	person
+	hasCoffe bool
+}
+
+func (aP angryPerson) speak() {
+	if aP.hasCoffe == true {
+		fmt.Println("Good morning.")
+	} else {
+		fmt.Println("Do not speak to me I have not had my coffee yet.")
+	}
+}
+
+type human interface {
+	speak()
+}
+
+func haveAChat(h human) {
+	h.speak()
+}
+
+func main() {
+	fmt.Println("Hello, World!")
+	fmt.Println("Hello, my name is James.")
+	fmt.Println(len("Hello World"))
+	fmt.Println("Hello World"[1])
+	fmt.Println("Hello " + "World")
+
+	// Variable declaration
+	var x int
+	x = 2
+	fmt.Println(x)
+
+	// Variable short declaration
+	y := 1
+	fmt.Printf("%T", y)
+
+	// List
+	xSlice := []int{1, 1, 2, 4, 6, 12}
+	fmt.Println(xSlice)
+
+	// Map, key:value
+	yMap := map[string]int{
+		"James": 19,
+		"Laura": 90,
+	}
+	fmt.Println(yMap)
+
+	// if we use all values of the type we do not need to declare subtypes.
+	p1 := person{"James", "Tynan"}
+	fmt.Println(p1)
+	p1.speak()
+
+	p2 := person{}
+	p2.lname = "Smith"
+	p2.fname = "Laura"
+	fmt.Println(p2)
+
+	p3 := angryPerson{
+		person:   person{"Grump", "Butt"},
+		hasCoffe: false,
+	}
+	haveAChat(p3)
+	p3.hasCoffe = true
+	haveAChat(p3)
+}
